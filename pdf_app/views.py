@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 class Home(TemplateView):
 
     template_name = "home.html"
-    def upload_file(request):
+    def upload_file(self,request):
         if request.method == 'POST':
             form = UploadFileForm(request.POST, request.FILES)
             if form.is_valid():
