@@ -10,7 +10,8 @@ class Home(TemplateView):
     def post(self,request):
         if request.method == 'POST':
             form = UploadFileForm(request.POST, request.FILES)
-            self.handle_uploaded_file(request.FILES['file'])
+            print(request.FILES)
+            #self.handle_uploaded_file(request.FILES['file'])
             print("made it here")
         else:
             form = UploadFileForm()
