@@ -2,6 +2,8 @@ from django.views.generic import TemplateView
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.utils.decorators import method_decorator
 from .forms import UploadFileForm
+from django.shortcuts import render
+
 
 class Home(TemplateView):
 
@@ -10,7 +12,7 @@ class Home(TemplateView):
     def post(self,request):
         if request.method == 'POST':
             form = UploadFileForm(request.POST, request.FILES)
-            print(request.FILES)
+            print(request.FILES['myfile'])
             #self.handle_uploaded_file(request.FILES['file'])
             print("made it here")
         else:
