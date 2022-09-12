@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
-
+from django.utils.decorators import method_decorator
 class Home(TemplateView):
 
     template_name = "home.html"
@@ -14,3 +14,4 @@ class Home(TemplateView):
         else:
             form = UploadFileForm()
         return render(request, 'upload.html', {'form': form})
+
