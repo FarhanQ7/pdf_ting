@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 class Home(TemplateView):
 
     template_name = "home.html"
-    @csrf_exempt
+    @method_decorator(csrf_exempt)
     def upload_file(self,request):
         if request.method == 'POST':
             form = UploadFileForm(request.POST, request.FILES)
