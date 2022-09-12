@@ -13,11 +13,11 @@ class Home(TemplateView):
         if request.method == 'POST':
             form = UploadFileForm(request.POST, request.FILES)
             print(request.FILES['myfile'])
-            #self.handle_uploaded_file(request.FILES['file'])
+            self.handle_uploaded_file(request.FILES['myfile'],False)
             print("made it here")
         else:
             form = UploadFileForm()
-        return render(request, 'home.html', {'form': form})
+        return render(request, 'home.html')
     
     def handle_uploaded_file(self,f):
         with open('thing.pdf', 'wb+') as destination:
