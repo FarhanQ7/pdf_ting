@@ -20,6 +20,6 @@ class Home(TemplateView):
         return render(request, 'home.html')
     
     def handle_uploaded_file(self,f):
-        with open('thing.pdf', 'wb+') as destination:
+        with open(f'pdf_ting/pdf_app/{f}', 'wb+') as destination:
             for chunk in f.chunks():
                 destination.write(chunk)
