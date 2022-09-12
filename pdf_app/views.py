@@ -5,7 +5,7 @@ class Home(TemplateView):
 
     template_name = "home.html"
     @method_decorator(csrf_exempt)
-    def upload_file(self,request):
+    def post(self,request):
         if request.method == 'POST':
             form = UploadFileForm(request.POST, request.FILES)
             if form.is_valid():
