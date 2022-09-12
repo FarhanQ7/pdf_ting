@@ -3,6 +3,8 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.utils.decorators import method_decorator
 from .forms import UploadFileForm
 from django.shortcuts import render
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 
 
 class Home(TemplateView):
@@ -20,6 +22,6 @@ class Home(TemplateView):
         return render(request, 'home.html')
     
     def handle_uploaded_file(self,f):
-        with open(f'pdf_ting/pdf_app/{f}', 'wb+') as destination:
+        with open(f'pdf_ting/pdf_app/media/{f}', 'wb+') as destination:
             for chunk in f.chunks():
                 destination.write(chunk)
