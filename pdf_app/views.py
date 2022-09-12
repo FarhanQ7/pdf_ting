@@ -20,6 +20,11 @@ class Home(TemplateView):
             myfile = request.FILES.get('myfile', False)
             fs = FileSystemStorage()
             filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.url(filename)
+            print(f"myfile: {myfile}")
+            print(f"fs: {fs}")
+            print(f"filename: {filename}")
+            print(f"uploaded_file_url: {uploaded_file_url}")
         else:
             form = UploadFileForm()
         return render(request, 'home.html')
