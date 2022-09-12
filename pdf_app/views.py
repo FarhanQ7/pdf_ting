@@ -1,5 +1,7 @@
 from django.views.generic import TemplateView
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 class Home(TemplateView):
 
     template_name = "home.html"
