@@ -59,7 +59,7 @@ ROOT_URLCONF = 'pdf_ting.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["root/pdf_ting/pdf_app","/root/pdf_ting/pdf_app"],
+        'DIRS': ["/pdf_ting/pdf_app/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
