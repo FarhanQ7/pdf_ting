@@ -5,6 +5,8 @@ from .forms import UploadFileForm
 from django.shortcuts import render
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from pdf2docx import Converter
+
 
 
 class Home(TemplateView):
@@ -25,6 +27,10 @@ class Home(TemplateView):
             print(f"fs: {fs}")
             print(f"filename: {filename}")
             print(f"uploaded_file_url: {uploaded_file_url}")
+            docx = '/media/conv.docx'
+            cv = Converter(uploaded_file_url)
+            cv.convert(docx_file)      
+            cv.close()
         else:
             form = UploadFileForm()
         return render(request, 'home.html')
