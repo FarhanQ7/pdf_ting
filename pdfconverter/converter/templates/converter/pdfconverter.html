@@ -1,0 +1,88 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PDF Converter</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+  <style>
+    /* Your CSS styles here */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>PDF Converter</h1>
+    <form id="upload-form" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="documentFile">Select Document:</label>
+        <input type="file" class="form-control" name="document" id="documentFile" accept=".doc, .docx, .ppt, .pptx, .xls, .xlsx">
+      </div>
+      <button type="button" class="btn" onclick="uploadFile()">Convert to PDF</button>
+    </form>
+
+    <progress id="progressBar" value="0" max="100" style="width:300px;"></progress>
+    <h3 id="status"></h3>
+    <p id="loaded_n_total"></p>
+
+    <script>
+      function _(el) {
+        return document.getElementById(el);
+      }
+
+      function uploadFile() {
+        var file = _("documentFile").files[0];
+        if (file) {
+          var formdata = new FormData();
+          formdata.append("document", file);
+          var ajax = new XMLHttpRequest();
+          ajax.upload.addEventListener("progress", progressHandler, false);
+          ajax.addEventListener("load", completeHandler, false);
+          ajax.addEventListener("error", errorHandler, false);
+          ajax.addEventListener("abort", abortHandler, false);
+          ajax.open("POST", "{% url 'converter:convert_to_pdf' %}");
+          ajax.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+          ajax.send(formdata);
+        } else {
+          alert("Please select a document to convert.");
+        }
+      }
+
+      function progressHandler(event) {
+        _("status").innerHTML = Math.round((event.loaded / event.total) * 100) + "% uploaded... please wait";
+        _("progressBar").value = Math.round((event.loaded / event.total) * 100);
+        _("loaded_n_total").innerHTML = "Uploaded " + event.loaded + " bytes of " + event.total;
+      }
+
+      function completeHandler(event) {
+        _("status").innerHTML = event.target.responseText;
+        _("progressBar").value = 0;
+      }
+
+      function errorHandler(event) {
+        _("status").innerHTML = "Upload Failed";
+      }
+
+      function abortHandler(event) {
+        _("status").innerHTML = "Upload Aborted";
+      }
+
+      function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          var cookies = document.cookie.split(";");
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+    </script>
+  </div>
+</body>
+</html>
+
